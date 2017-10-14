@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_2"
+   data-name="Layer 2"
+   viewBox="0 0 899.82 203.28"
+   version="1.1"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata33">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2211"
+     inkscape:window-height="1159"
+     id="namedview31"
+     showgrid="false"
+     inkscape:zoom="1.373608"
+     inkscape:cx="449.91"
+     inkscape:cy="101.64"
+     inkscape:window-x="75"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Layer_2" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#0da9ff;}.cls-2{fill:#202326;}</style>
+  </defs>
+  <title
+     id="title6">bankex-core-logo</title>
+  <rect
+     class="cls-1"
+     x="63.48"
+     y="66.58"
+     width="76.33"
+     height="13.44"
+     id="rect8" />
+  <rect
+     class="cls-1"
+     x="63.48"
+     y="94.92"
+     width="76.33"
+     height="13.44"
+     id="rect10" />
+  <rect
+     class="cls-1"
+     x="63.48"
+     y="123.27"
+     width="76.33"
+     height="13.44"
+     id="rect12" />
+  <path
+     class="cls-2"
+     d="M101.64,10a91.64,91.64,0,1,0,91.64,91.64A91.64,91.64,0,0,0,101.64,10Zm6.72,169.54V155.69H94.92v23.85a78.18,78.18,0,0,1,0-155.79V47.59h13.44V23.75a78.18,78.18,0,0,1,0,155.79Z"
+     id="path14" />
+  <path
+     class="cls-2"
+     d="M306.32,100.29c7.81-4.06,15-10.82,15-23.43v-.3a23.55,23.55,0,0,0-7.06-17.42c-6-6-15.47-9.31-27.49-9.31H239.63V66.19h44.76c11.86,0,18.47,5.11,18.47,13.37v.3c0,9.61-8,14.27-19.83,14.27H239.63V155h48.67c23.43,0,38.9-10.06,38.9-28.84v-.3C327.2,111.55,318.64,104.49,306.32,100.29Zm2.4,23.88c0,9.46-7.66,14.42-20.28,14.42H257.8V109.75h29.29c14.57,0,21.63,5.26,21.63,14.12Z"
+     id="path16" />
+  <path
+     class="cls-2"
+     d="M465,49.82h17.12l56.33,72.7V49.82h18.18V155H541.2l-58-74.8V155H465Z"
+     id="path18" />
+  <path
+     class="cls-2"
+     d="M582,49.82h18.48v52.87l50-52.87h22.68L629.48,95,675.14,155H652.76l-35.9-47.31-16.37,16.82V155H582Z"
+     id="path20" />
+  <path
+     class="cls-1"
+     d="M829.75,101.49,793,49.82h21.78l26.14,37.7,26.29-37.7h21.18l-36.65,51.37L889.83,155H868.05l-27.64-39.8L812.63,155H791.45Z"
+     id="path22"
+     style="fill:#202326;fill-opacity:1" />
+  <polygon
+     class="cls-2"
+     points="447.63 154.96 401.36 49.07 384.24 49.07 337.98 154.96 356.9 154.96 392.5 71.15 410.41 113.32 390.31 113.32 383.43 129.7 417.37 129.7 428.1 154.96 447.63 154.96"
+     id="polygon24" />
+  <rect
+     class="cls-1"
+     x="692.68"
+     y="49.82"
+     width="81.8"
+     height="16.52"
+     id="rect26"
+     style="fill:#202326;fill-opacity:1" />
+  <polygon
+     class="cls-1"
+     points="709.2 138.44 709.2 110.2 756.2 110.2 756.2 93.68 692.67 93.68 692.67 93.68 692.67 154.96 775.22 154.96 775.22 138.44 709.2 138.44"
+     id="polygon28"
+     style="fill:#202326;fill-opacity:1" />
+</svg>

@@ -1,0 +1,22 @@
+@import url('/lib/font-awesome-4.7.0/css/font-awesome.css');
+
+body {
+  margin-top: 2rem;
+}
+
+.bankex-logo {
+  opacity: 0.5;
+	position: fixed;
+	right: 30px;
+	bottom: 25px;
+    width: 189px;
+    height: 59px;
+    text-align: left;
+    text-indent: -10000px;
+    background: url(/img/logo.svg) no-repeat 0 50%;
+    background-size: contain;
+}
+
+.list-group .row .text {
+  margin: 10px 0 4px 0;
+}
