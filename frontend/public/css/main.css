@@ -4,6 +4,14 @@ body {
   margin-top: 2rem;
 }
 
+.card.hero {
+  margin-bottom: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.9rem;
+}
+
 .space-after {
   margin-bottom: 2rem;
 }

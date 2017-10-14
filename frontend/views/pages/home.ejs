@@ -1,34 +1,45 @@
 <% layout('../layout') -%>
-<h1>Plasma Prototype</h1>
+<h1>Plasma Swap Prototype</h1>
 <hr>
-<div class="card">
-	<h4 class="card-header">Ethereum<span class="pull-right"><span class="text-muted">Balance</span> <span id="eth-balance"></span>&nbsp;<span class="text-muted">ETH</span></h4>
-	<div class="card-body">
-		<span class="text-muted" id="no-eth-transactions">No transactions yet</span>
-		<ul class="list-group hidden" id="list-eth-transactions">
-		</ul>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card">
+			<h4 class="card-header">Ethereum<span class="pull-right"><span class="text-muted">Balance</span> <span id="eth-balance"></span>&nbsp;<span class="text-muted">ETH</span></h4>
+			<div class="card-body">
+				<div class="row">
+					<div class="col">
+						<button type="button" class="btn btn-lg btn-primary btn-block" id="btn-deposit">Buy 1 <i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+					<div class="col">
+						<button type="button" class="btn btn-lg btn-primary btn-block" id="btn-deposit-3">Buy 3 <i class="fa fa-arrow-circle-right"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<span class="text-muted" id="no-eth-transactions">No transactions yet</span>
+				<ul class="list-group hidden" id="list-eth-transactions">
+				</ul>
+			</div>
+		</div>
 	</div>
-	<div class="card-footer">
-		<div class="row">
-			<div class="col">
-				<button type="button" class="btn btn-lg btn-primary btn-block" id="btn-deposit"><i class="fa fa-arrow-circle-down"></i> Deposit</button>
+	<div class="col-md-7">
+		<div class="card" id="my-cards">
+			<h4 class="card-header">Plasma Network <span class="text-muted">| My Account</span><span class="pull-right"><span id="heroes-count">0</span>/<span id="heroes-total"></span> <span class="text-muted">collected</span></span></h4>
+			<div class="card-body">
+				<span class="text-muted" id="no-plasma-assets">No assets</span>
+				<div class="row hidden" id="list-plasma-assets">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="card">
+			<h4 class="card-header">Plasma Network</h4>
+			<div class="card-body">
+				<span class="text-muted" id="no-plasma-assets-others">No assets</span>
+				<ul class="list-group hidden" id="list-plasma-assets-others">
 			</div>
 		</div>
 	</div>
 </div>
-<hr>
-<div class="card">
-	<h4 class="card-header">Plasma <span class="text-muted">| Own Account</span><span class="pull-right"><span class="text-muted">Balance</span> <span id="plasma-balance"></span>&nbsp;<span class="text-muted">ETH</span></span></h4>
-	<div class="card-body">
-		<span class="text-muted" id="no-plasma-assets">No assets</span>
-		<ul class="list-group hidden" id="list-plasma-assets">
-	</div>
-</div>
-<hr>
-<div class="card">
-	<h4 class="card-header">Plasma <span class="text-muted">| Others</span></h4>
-	<div class="card-body">
-		<span class="text-muted" id="no-plasma-assets-others">No assets</span>
-		<ul class="list-group hidden" id="list-plasma-assets-others">
-	</div>
-</div>
+
