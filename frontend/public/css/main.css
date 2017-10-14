@@ -4,19 +4,28 @@ body {
   margin-top: 2rem;
 }
 
+.space-after {
+  margin-bottom: 2rem;
+}
+
 .bankex-logo {
   opacity: 0.5;
-	position: fixed;
-	right: 30px;
-	bottom: 25px;
-    width: 189px;
-    height: 59px;
-    text-align: left;
-    text-indent: -10000px;
-    background: url(/img/logo.svg) no-repeat 0 50%;
-    background-size: contain;
+  position: fixed;
+  right: 30px;
+  bottom: 25px;
+  width: 189px;
+  height: 59px;
+  text-align: left;
+  text-indent: -10000px;
+  background: url(/img/logo.svg) no-repeat 0 50%;
+  background-size: contain;
+  pointer-events: none;
 }
 
 .list-group .row .text {
   margin: 10px 0 4px 0;
+}
+
+.hidden {
+  display: none;
 }

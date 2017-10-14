@@ -1,49 +1,11 @@
 <% layout('../layout') -%>
 <h1>Plasma Prototype</h1>
-<hr class="space-after">
+<hr>
 <div class="card">
-	<h4 class="card-header">Ethereum</h4>
+	<h4 class="card-header">Ethereum<span class="pull-right"><span class="text-muted">Balance</span> <span id="eth-balance"></span>&nbsp;<span class="text-muted">ETH</span></h4>
 	<div class="card-body">
-		<!--span class="text-muted">No transactions yet</span-->
-		<ul class="list-group">
-			<li class="list-group-item list-group-item-primary">
-				<div class="row">
-					<div class="col-md-auto">
-						<div class="text text-muted">
-							10/14/2017 17:00:00
-						</div>
-					</div>
-					<div class="col">
-						<div class="text">
-							0x0000000000000000000000000000000000000001
-						</div>
-					</div>
-					<div class="col-md-auto">
-						<div class="text">
-							<i class="fa fa-arrow-circle-down"></i> 0.1 Ether
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="list-group-item list-group-item-success">
-				<div class="row">
-					<div class="col-md-auto">
-						<div class="text text-muted">
-							10/14/2017 17:00:00
-						</div>
-					</div>
-					<div class="col">
-						<div class="text">
-							0x0000000000000000000000000000000000000001
-						</div>
-					</div>
-					<div class="col-md-auto">
-						<div class="text">
-							<i class="fa fa-arrow-circle-up"></i> 0.1 Ether
-						</div>
-					</div>
-				</div>
-			</li>
+		<span class="text-muted" id="no-eth-transactions">No transactions yet</span>
+		<ul class="list-group hidden" id="list-eth-transactions">
 		</ul>
 	</div>
 	<div class="card-footer">
@@ -54,31 +16,19 @@
 		</div>
 	</div>
 </div>
-<hr class="space-after">
+<hr>
 <div class="card">
-	<h4 class="card-header">Plasma</h4>
+	<h4 class="card-header">Plasma <span class="text-muted">| Own Account</span><span class="pull-right"><span class="text-muted">Balance</span> <span id="plasma-balance"></span>&nbsp;<span class="text-muted">ETH</span></span></h4>
 	<div class="card-body">
-		<ul class="list-group">
-			<li class="list-group-item list-group-item-primary">
-				<div class="row">
-					<div class="col-md-auto">
-						<div class="text text-muted">
-							10/14/2017 17:00:00
-						</div>
-					</div>
-					<div class="col">
-						<div class="text">
-							0x0000000000000000000000000000000000000001
-						</div>
-					</div>
-					<div class="col-md-auto">
-						<button type="button" class="btn btn-info btn-block" id="btn-send-offchain"><i class="fa fa-paper-plane"></i> Send Transaction</button>
-					</div>
-					<div class="col-md-auto">
-						<button type="button" class="btn btn-success btn-block" id="btn-withdraw"><i class="fa fa-arrow-circle-up"></i> Withdraw</button>
-					</div>
-				</div>
-			</li>
-		</ul>
+		<span class="text-muted" id="no-plasma-assets">No assets</span>
+		<ul class="list-group hidden" id="list-plasma-assets">
+	</div>
+</div>
+<hr>
+<div class="card">
+	<h4 class="card-header">Plasma <span class="text-muted">| Others</span></h4>
+	<div class="card-body">
+		<span class="text-muted" id="no-plasma-assets-others">No assets</span>
+		<ul class="list-group hidden" id="list-plasma-assets-others">
 	</div>
 </div>
