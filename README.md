@@ -32,8 +32,18 @@ Crucial part that is not implemented (not trivial, but also not too difficult wi
 
 Concept is implemented using JS with conjuction on Web3 and Ethereumjs-Testrpc on a backend. For sake of simplicity all necessary functions are wrapped in REST API calls doing signatures on behalf of predefined set of address on a server, but proper implementation will allow users to use wallet apps such as Metamask to initiate transactions in a Plasma network by making a signature on a client side and interacting with a parent contract on Ethereum network as usual.
 
+## Why Plasma
+
+Here at Bankex we believe in efficiency of offloading of some transactions from Ethereum blockchain to Plasma chains especially if proper incentive is present for Plasma operators to behave properly (such incentive can we even in a form of completing with other operators for obtaining end-users). Another advantage is a flexibility of Plasma chain implementation as long as it can be effectively cross-checked by contract on a parent chain. With new cryptographic primitived added in Metropolis fork one can extent our PoC implementation with more money-like transaction structure (1 -> 2 splits of UTXO) with transactions itself utilizing ring signatures of zkSNARKs for privacy of end user.
+
 ## PoC DApp
 
 ![Alt text](https://bankex.github.io/ethwaterloo-hackathon/presentation/presentation.png)
+
+## Contributions
+
+* [shamatar](https://github.com/shamatar)
+* [dnx2k](https://github.com/dnx2k)
+
 
 
