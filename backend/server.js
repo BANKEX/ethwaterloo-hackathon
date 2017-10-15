@@ -42,7 +42,8 @@ const transactionPrefix = Buffer.from('tx');
 const privKeys = [fromBtcWif("5JmrM8PB2d5XetmVUCErMZYazBotNzSeMrET26WK8y3m8XLJS98"), 
                     fromBtcWif("5HtkDncwskEM5FiBQgU1wqLLbayBmfh5FSMYtLngedr6C6NhvWr")];
 const plasmaOperatorPrivKey = fromBtcWif("5JMneDeCfBBR1M6mX7SswZvC8axrfxNgoYKtu5DqVokdBwSn2oD");
-const plasmaOperatorAddress = ethUtil.privateToAddress(plasmaOperatorPrivKey);                
+const plasmaOperatorAddressBuffer = ethUtil.privateToAddress(plasmaOperatorPrivKey);
+const plasmaOperatorAddress = "0x"+plasmaOperatorAddressBuffer.toString('hex');                
 const port = 8000;
 app.use(bodyParser.json());
 
@@ -66,9 +67,9 @@ function startVM(){
         verbose:false,
         gasPrice: 0,
       accounts:[
-          {secretKey:"0x"+fromBtcWif("5JmrM8PB2d5XetmVUCErMZYazBotNzSeMrET26WK8y3m8XLJS98").toString('hex'), balance: 1e30},
-          {secretKey:"0x"+fromBtcWif("5HtkDncwskEM5FiBQgU1wqLLbayBmfh5FSMYtLngedr6C6NhvWr").toString('hex'), balance: 1e30},
-          {secretKey:"0x"+fromBtcWif("5JMneDeCfBBR1M6mX7SswZvC8axrfxNgoYKtu5DqVokdBwSn2oD").toString('hex'), balance: 1e30}    
+          {secretKey:"0x"+fromBtcWif("5JmrM8PB2d5XetmVUCErMZYazBotNzSeMrET26WK8y3m8XLJS98").toString('hex'), balance: 4.2e18},
+          {secretKey:"0x"+fromBtcWif("5HtkDncwskEM5FiBQgU1wqLLbayBmfh5FSMYtLngedr6C6NhvWr").toString('hex'), balance: 4.2e18},
+          {secretKey:"0x"+fromBtcWif("5JMneDeCfBBR1M6mX7SswZvC8axrfxNgoYKtu5DqVokdBwSn2oD").toString('hex'), balance: 4.2e18}    
       ],
         mnemonic: "42"
         // ,
@@ -87,6 +88,9 @@ function startVM(){
 
 async function populateAccounts(){
     allAccounts = await web3.eth.getAccounts() ;
+    allAccounts = allAccounts.map((a) => {
+        return a.toLowerCase();
+    })
     // allAccounts = await getAccountsPromisified();
     PlasmaContract = new TruffleContract(require("./build/contracts/PlasmaParent.json"));
     Web3PlasmaContract = new web3.eth.Contract(PlasmaContract.abi);
@@ -333,14 +337,15 @@ async function createBlock() {
 } 
  
 
-async function prepareProofsForWithdraw(blockNumber, txIdInBlock) {
+async function prepareProofsForWithdraw(blockNumber, txInBlock) {
     const block = await getBlockByNumber(blockNumber);
-    const tx = block.transactions[txIdInBlock];
-    const proof = "0x" + Buffer.concat(block.merkleTree.getProof(txIdInBlock, true)).toString('hex');
+    const tx = block.transactions[txInBlock];
+    const proof = "0x" + Buffer.concat(block.merkleTree.getProof(txInBlock, true)).toString('hex');
     const encodedTx = '0x' + Buffer.concat(tx.raw).toString('hex')
+    console.log(block.header.merkleRootHash.toString('hex'));
     return {
         blockNumber: blockNumber,
-        txIdInBlock: txIdInBlock,
+        txInBlock: txInBlock,
         merkleProof: proof,
         tx: encodedTx
     }
@@ -368,7 +373,8 @@ async function writeBlock(block) {
 async function checkUTXO(spendingTx) {
 
     if (spendingTx.blockNumber == 0 || (Buffer.isBuffer(spendingTx.blockNumber) && spendingTx.blockNumber.readUInt32BE(0) == 0) ) {
-        return plasmaOperatorAddress.equals(spendingTx.getSenderAddress());
+        return plasmaOperatorAddress.toLowerCase() === ('0x'+spendingTx.getSenderAddress().toString('hex')).toLowerCase();
+        // return plasmaOperatorAddressBuffer.equals(spendingTx.getSenderAddress());
     } else {
         const keyForUnspent = Buffer.concat([utxoPrefix, spendingTx.blockNumber, spendingTx.txInBlock])
         try {
@@ -400,7 +406,7 @@ async function getBlockByNumber(blockNumber) {
 } 
 
  
-app.get('/block/:id', 'getBlockByNumber', async function(req, res){
+app.get('/plasmaBlock/:id', 'getBlockByNumber', async function(req, res){
     try{ 
         const blockNumber = parseInt(req.params.id);
         if (!blockNumber){
@@ -439,6 +445,29 @@ app.get('/utxos/:address', 'getUtxosByAddress', async function(req, res, next){
     }
 });
 
+app.get('/plasmaParent/lastSubmittedHeader', 'lastSubmittedHeader', async function(req, res){
+    try{ 
+        const headerNumber = await DeployedPlasmaContract.methods.lastBlockNumber().call({from:allAccounts[2]});
+
+        return res.json({lastSubmittedHeader:headerNumber});
+    }
+    catch(error){
+         return res.json({error: true, reason: "invalid request"});
+    }
+});
+
+app.get('/ethereumBalance/:address', 'balanceForAddress', async function(req, res){
+    try{ 
+        addressString = req.params.address
+        addressString = ethUtil.addHexPrefix(addressString)
+        const bal = await web3.eth.getBalance(addressString);
+        return res.json({balanceInWei:bal});
+    }
+    catch(error){
+         return res.json({error: true, reason: "invalid address"});
+    }
+});
+
 app.get('/plasmaParent/blockHeader/:blockNumber', 'getParentContractHeader', async function(req, res){
     try{ 
         const blockNumber = parseInt(req.params.blockNumber);
@@ -452,6 +481,8 @@ app.get('/plasmaParent/blockHeader/:blockNumber', 'getParentContractHeader', asy
          res.json({error: true, reason: "invalid address"});
     }
 });
+
+
 
 app.post('/sendPlasmaTransaction', 'sendPlasmaTransaction', async function(req, res){
     try{ 
@@ -489,6 +520,130 @@ app.post('/sendPlasmaTransaction', 'sendPlasmaTransaction', async function(req, 
     }
 });
 
+// For demo purposes only
+app.post('/sendAndSign', 'sendAndSignPlasmaTransaction', async function(req, res){
+    try{ 
+        const {blockNumber, txInBlock, assetId, to, from} = req.body
+        if (!blockNumber || !txInBlock || !assetId || !to || !from) {
+            return res.json({error: true, reason: "invalid transation"});
+            // next()
+        }
+        const tx = new PlasmaTransaction({blockNumber, txInBlock, assetId, to})
+        const idxInKeys = allAccounts.indexOf(from);
+        if (idxInKeys != 1 && idxInKeys != 0){
+            return res.json({error: true, reason: "invalid transation"});
+        } 
+        const privKey = privKeys[idxInKeys];
+        tx.sign(privKey);
+        if (!tx.validate()){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        var unspentTxRaw
+        try{
+            const keyForUtxo = Buffer.concat([utxoPrefix, tx.blockNumber, tx.txInBlock]);
+             unspentTxRaw = await levelDB.get(keyForUtxo);
+        } 
+        catch(err){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        const unspentTx = new PlasmaTransaction(sliceRawBufferForTx(unspentTxRaw))
+        if (!unspentTx.validate()){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        if (!unspentTx.to.equals(tx.getSenderAddress())){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        txParamsFIFO.push(tx);
+        console.log("Pushed new TX")
+        return res.json({error: false, status: "accepted"});
+    }
+    catch(error){
+         res.json({error: true, reason: "invalid transation"});
+ 
+    }
+});
+
+//demo purposes only
+app.post('/startWithdraw', 'startWithdraw', async function(req, res){
+    try{ 
+        const {blockNumber, txInBlock, assetId, from} = req.body
+        if (!blockNumber || !txInBlock || !assetId || !from) {
+            return res.json({error: true, reason: "invalid transation"});
+            // next()
+        }
+        // const to = plasmaOperatorAddress;
+        // const tx = new PlasmaTransaction({blockNumber, txInBlock, assetId, to})
+        const blockNumberBuffer = ethUtil.toBuffer(blockNumber)
+        const txInBlockBuffer = ethUtil.toBuffer(txInBlock)
+        var unspentTxRaw
+        try{
+            const keyForUtxo = Buffer.concat([utxoPrefix, blockNumberBuffer, txInBlockBuffer]);
+             unspentTxRaw = await levelDB.get(keyForUtxo);
+        } 
+        catch(err){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        const unspentTx = new PlasmaTransaction(sliceRawBufferForTx(unspentTxRaw))
+        if (!unspentTx.validate()){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        if (('0x'+unspentTx.to.toString('hex').toLowerCase()) != from){
+            return res.json({error: true, reason: "invalid transation"});
+        }
+        const preparedProof = await prepareProofsForWithdraw(blockNumberBuffer.readUInt32BE(0), txInBlockBuffer.readUInt8(0));
+        var result = await DeployedPlasmaContract.methods.startWithdraw(preparedProof.blockNumber, 
+            preparedProof.txInBlock , preparedProof.tx, preparedProof.merkleProof ).send({from:from, gas: 3.6e6});
+        const acceptanceEvent = result.events.WithdrawRequestAcceptedEvent; 
+        const response =  {error: false, status: "accepted", 
+                inEthereumBlock: acceptanceEvent.returnValues._ethBlockNumber,
+                withdrawIndex: acceptanceEvent.returnValues._withdrawIndex}
+        return res.json(response);
+    }
+    catch(error){
+         res.json({error: true, reason: "invalid transation"});
+ 
+    }
+});
+
+
+function jump(duration) {
+    return async function() {
+    //   console.log("Jumping " + duration + "...");
+
+      var params = duration.split(" ");
+      params[0] = parseInt(params[0])
+
+      var seconds = moment.duration.apply(moment, params).asSeconds();
+      await sendAsyncPromisified({
+        jsonrpc: "2.0",
+        method: "evm_increaseTime",
+        params: [seconds],
+        id: new Date().getTime()
+        });
+    }
+}
+
+//demo purposes only
+app.post('/finalizeWithdraw', 'finalizeWithdraw', async function(req, res){
+    try{ 
+        const {inEthereumBlock, withdrawIndex} = req.body
+        if (!inEthereumBlock || !withdrawIndex) {
+            return res.json({error: true, reason: "invalid request"});
+            // next()
+        }
+        await jump("2 days")();
+        var result = await DeployedPlasmaContract.methods.finalizeWithdraw(inEthereumBlock, withdrawIndex).send({from:allAccounts[2], gas: 3.6e6});
+        const finalizationEvent = result.events.WithdrawFinalizedEvent; 
+        const response =  {error: false, status: "finalized", to: finalizationEvent.returnValues._to}
+        return res.json(response);
+    }
+    catch(error){
+         res.json({error: true, reason: "invalid request"});
+ 
+    }
+});
+
+// emulate deposit on main chain
 app.post('/fundPlasma', 'fundPlasma', async function(req, res){
     try{ 
         const {toAddress } = req.body
@@ -588,6 +743,8 @@ app.listen(port, async () => {
   console.log('0x'+ethUtil.privateToAddress(privKeys[0]).toString('hex'))
   console.log('0x'+ethUtil.privateToAddress(privKeys[1]).toString('hex'))
   console.log("Operator address = 0x"+ ethUtil.privateToAddress(plasmaOperatorPrivKey).toString('hex'))
+  const txHashPrefix = ethUtil.toBuffer('\u0019Ethereum Signed Message:\n' + 94).toString('hex')
+  console.log("Personal message prefix for tx (len 94) = " + txHashPrefix + ", byte lengths = " + txHashPrefix.length/2)
   blockMiningTimer = setTimeout(async () => {
     tryToMine()
   }, 1000);
