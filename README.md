@@ -40,6 +40,206 @@ Here at BANKEX we believe in efficiency of offloading of some transactions from 
 
 ![Alt text](https://bankex.github.io/ethwaterloo-hackathon/presentation/presentation.png)
 
+### Installation and Prerequisutes
+
+System requirements:
+
+* Ubuntu or similar is preferrable but can also be run on Mas OS X or Windows as well
+* Docker and Docker compose installed (instruction below is for Ubuntu Linux):
+    * Docker installation https://www.digitalocean.com/community/tutorials/docker-ubuntu-16-04-ru
+    * Docker Compose installation https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
+
+### Repository Cloning
+
+```bash
+git clone https://github.com/BankEx/ethwaterloo-hackathon.git
+cd ethwaterloo-hackathon
+```
+
+### Running
+
+```bash
+docker-compose up
+```
+
+to run as a deamon:
+
+```bash
+docker-compose up -d
+```
+
+### Usage
+
+Frontend is accessible via ```http://localhost:3000/home```, backend ```localhost:8000/```
+
+### Basic Plasma API description
+
+#### Plasma Block Retreival
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/plasmaBlock/1",
+  "method": "GET",
+  "headers": {}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Last Submitted Block
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/plasmaParent/lastSubmittedHeader",
+  "method": "GET",
+  "headers": {}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Blasma Block Header
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/plasmaParent/blockHeader/1",
+  "method": "GET",
+  "headers": {}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Block's Unspent Transactions Output
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/utxos/0xf62803ffaddda373d44b10bf6bb404909be0e66b",
+  "method": "GET",
+  "headers": {}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Plasma Balances
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/ethereumBalance/0xf62803ffaddda373d44b10bf6bb404909be0e66b",
+  "method": "GET",
+  "headers": {}
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+Testing addresses: ```0xf62803ffaddda373d44b10bf6bb404909be0e66b``` and ```0xcf78f18299eac0e0a238db7f4742ef433f98c85e```
+
+#### Funding Plasma
+
+Here is server-side testing environmentfunding. Production intends to use MetaMask and smart contract function ```Deposit()``` invocation.
+
+```javascript
+Цепочка вызовов var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/fundPlasma",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"toAddress\":\"0xf62803ffaddda373d44b10bf6bb404909be0e66b\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Sending Transaction
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/sendAndSign",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"blockNumber\":\"0x00000001\",\"txInBlock\":\"0x00\",\"assetId\":\"0x00000000\",\"to\":\"0xcf78f18299eac0e0a238db7f4742ef433f98c85e\",\"from\": \"0xf62803ffaddda373d44b10bf6bb404909be0e66b\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Withdraw initiation
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/startWithdraw",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"blockNumber\":\"0x00000002\",\"txInBlock\":\"0x00\",\"assetId\":\"0x00000000\", \"from\": \"0xcf78f18299eac0e0a238db7f4742ef433f98c85e\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+#### Withdraw finalization (after security period of 24 hours)
+
+```javascript
+Александр Власов, [15.10.17 00:57]
+и последняя в цепочке
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://127.0.0.1:8000/finalizeWithdraw",
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json"
+  },
+  "processData": false,
+  "data": "{\"inEthereumBlock\": \"5\",\n\t\"withdrawIndex\": \"16\"}"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
 ## Contributions
 
 * [shamatar](https://github.com/shamatar)
