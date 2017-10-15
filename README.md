@@ -12,9 +12,9 @@ One of possible solutions is Plasma - the prominent upgrade to Ethereum blockcha
 
 Let's apply this to the particular game, which is just one of thousands applications, but could be directly applied to some cases like promotional campaigns as well: **digital item collection exchange network**.
 
-Say You have to collect some limited set of items like digital baseball cards. You can buy it on the open market but you have no ability to guess what particular item off the collection you will buy. and want to have the ability to exchange repeated cards with other collectors. This exchange procedure are going to be held on side blockchain.
+Say you have to collect some limited set of items like digital baseball cards. You can buy it on the open market but you have no ability to guess what particular item off the collection you will buy. And you want to have the ability to exchange repeated cards with other collectors. This exchange procedure are going to be held on side blockchain.
 
-## Plasma network technical concept
+## Plasma Network Technical Concept
 
 From technical point of view Plasma blockchain - is just another blockchain, that can be efficiently settled to parent Ethereum chain and is well protected from misbehavior of both Plasma operator and Plasma blockchain participats by smart-contract on Ethererum network.
 
@@ -34,7 +34,7 @@ Concept is implemented using JS with conjuction on Web3 and Ethereumjs-Testrpc o
 
 ## Why Plasma
 
-Here at Bankex we believe in efficiency of offloading of some transactions from Ethereum blockchain to Plasma chains especially if proper incentive is present for Plasma operators to behave properly (such incentive can we even in a form of completing with other operators for obtaining end-users). Another advantage is a flexibility of Plasma chain implementation as long as it can be effectively cross-checked by contract on a parent chain. With new cryptographic primitived added in Metropolis fork one can extent our PoC implementation with more money-like transaction structure (1 -> 2 splits of UTXO) with transactions itself utilizing ring signatures of zkSNARKs for privacy of end user.
+Here at BANKEX we believe in efficiency of offloading of some transactions from Ethereum blockchain to Plasma chains especially if proper incentive is present for Plasma operators to behave properly (such incentive can we even in a form of completing with other operators for obtaining end-users). Another advantage is a flexibility of Plasma chain implementation as long as it can be effectively cross-checked by contract on a parent chain. With new cryptographic primitived added in Metropolis fork one can extent our PoC implementation with more money-like transaction structure (1 -> 2 splits of UTXO) with transactions itself utilizing ring signatures of zkSNARKs for privacy of end user.
 
 ## PoC DApp
 
