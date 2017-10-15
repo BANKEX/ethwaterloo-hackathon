@@ -66,6 +66,8 @@ to run as a deamon:
 
 ```bash
 docker-compose up -d
+...
+docker-compose down
 ```
 
 ### Usage
@@ -161,7 +163,7 @@ Testing addresses: ```0xf62803ffaddda373d44b10bf6bb404909be0e66b``` and ```0xcf7
 Here is server-side testing environmentfunding. Production intends to use MetaMask and smart contract function ```Deposit()``` invocation.
 
 ```javascript
-Цепочка вызовов var settings = {
+var settings = {
   "async": true,
   "crossDomain": true,
   "url": "http://127.0.0.1:8000/fundPlasma",
@@ -221,8 +223,6 @@ $.ajax(settings).done(function (response) {
 #### Withdraw finalization (after security period of 24 hours)
 
 ```javascript
-Александр Власов, [15.10.17 00:57]
-и последняя в цепочке
 var settings = {
   "async": true,
   "crossDomain": true,
