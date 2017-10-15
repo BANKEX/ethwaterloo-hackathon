@@ -12,6 +12,8 @@
     "ejs": "^2.5.7",
     "ejs-locals": "^1.0.2",
     "ethereumjs-testrpc": "^4.1.1",
+    "ethjs-contract": "^0.1.9",
+    "ethjs-query": "^0.2.9",
     "express": "^4.16.1",
     "mongodb": "^2.2.33",
     "solc": "^0.4.16",

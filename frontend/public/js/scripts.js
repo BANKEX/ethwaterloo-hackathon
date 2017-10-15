@@ -1,3 +1,14 @@
+var abi = [ { "constant": true, "inputs": [], "name": "index", "outputs": [ { "name": "", "type": "uint8", "value": "0" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "kill", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x0de82290b1ac2c29f2dd2b7731ccac5f107c53bd" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "Deposit", "outputs": [ { "name": "", "type": "uint8" } ], "payable": true, "stateMutability": "payable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ];
+var contractAaddress = '0xeB5cF932B47ef7236D621991AF1be2f0448644A6';
+var web3;
+var plasmaContractInstance;
+
+setTimeout(function () {
+	web3 = new Web3(web3.currentProvider);
+	PlasmaContract = web3.eth.contract(abi);
+	plasmaContractInstance = PlasmaContract.at(contractAaddress);
+}, 500);
+
 var address;
 var ethBalance = 123;
 
@@ -32,34 +43,63 @@ $(document).ready(function () {
 
 		li.appendTo(ul).fadeIn(500);
 
-		setTimeout(function () {
-			li.html('<div class="row">\
-				<div class="col-md-auto">\
-					<div class="text text-muted">'
-						+ moment().format("MM/DD/YYYY HH:mm:SS") + 
-					'</div>\
-				</div>\
-				<div class="col-md-auto">\
-					<div class="text text-right">\
-						0.1&nbsp;<span class="text-muted">ETH</span> <i class="fa fa-arrow-circle-right"></i>\
+		var methodSignature = plasmaContractInstance.Deposit.getData();
+    	var amount = web3.toWei(0.1, 'ether');
+
+    	var post_request = {
+			to: contractAaddress,
+			value: amount,
+			data: methodSignature
+		};
+
+		web3.eth.sendTransaction(
+			post_request,
+			function(err, transactionHash) {
+				if (!err) {
+					li.html('<div class="row">\
+						<div class="col-md-auto">\
+							<div class="text text-muted">'
+								+ moment().format("MM/DD/YYYY HH:mm:SS") + 
+							'</div>\
+						</div>\
+						<div class="col-md-auto">\
+							<div class="text text-right">\
+								0.1&nbsp;<span class="text-muted">ETH</span> <i class="fa fa-arrow-circle-right"></i>\
+							</div>\
+						</div>\
 					</div>\
-				</div>\
-			</div>\
-			<div class="row">\
-				<div class="col">\
-					<div class="text text-sm">'
-					+ address +
-					'</div>\
-				</div>\
-			</div>');
+					<div class="row">\
+						<div class="col">\
+							<div class="text text-sm">'
+							+ address +
+							'</div>\
+						</div>\
+					</div>');
 
-			$("#no-plasma-assets").addClass("hidden");
+					$("#no-plasma-assets").addClass("hidden");
 
-			buyHeroes(1);
+					buyHeroes(1);
 
-			ethBalance -= 1;
-			updateBalances();
-		}, 1500);
+					ethBalance -= 1;
+					updateBalances();
+				} else {
+					li.addClass("list-group-item-danger").html('<div class="row">\
+						<div class="col-md-auto">\
+							<div class="text text-muted">'
+								+ moment().format("MM/DD/YYYY HH:mm:SS") + 
+							'</div>\
+						</div>\
+						<div class="col-md-auto">\
+							<div class="text text-right">\
+								Error\
+							</div>\
+						</div>\
+					</div>');
+
+					$("#no-plasma-assets").addClass("hidden");
+				}
+			}
+		);
 	});
 
 	$('#btn-deposit-3').click(function () {
@@ -80,34 +120,63 @@ $(document).ready(function () {
 
 		li.appendTo(ul).fadeIn(500);
 
-		setTimeout(function () {
-			li.html('<div class="row">\
-				<div class="col-md-auto">\
-					<div class="text text-muted">'
-						+ moment().format("MM/DD/YYYY HH:mm:SS") + 
-					'</div>\
-				</div>\
-				<div class="col-md-auto">\
-					<div class="text text-right">\
-						0.3&nbsp;<span class="text-muted">ETH</span> <i class="fa fa-arrow-circle-right"></i>\
+		var methodSignature = plasmaContractInstance.Deposit.getData();
+    	var amount = web3.toWei(0.3, 'ether');
+
+    	var post_request = {
+			to: contractAaddress,
+			value: amount,
+			data: methodSignature
+		};
+
+		web3.eth.sendTransaction(
+			post_request,
+			function(err, transactionHash) {
+				if (!err) {
+					li.html('<div class="row">\
+						<div class="col-md-auto">\
+							<div class="text text-muted">'
+								+ moment().format("MM/DD/YYYY HH:mm:SS") + 
+							'</div>\
+						</div>\
+						<div class="col-md-auto">\
+							<div class="text text-right">\
+								0.3&nbsp;<span class="text-muted">ETH</span> <i class="fa fa-arrow-circle-right"></i>\
+							</div>\
+						</div>\
 					</div>\
-				</div>\
-			</div>\
-			<div class="row">\
-				<div class="col">\
-					<div class="text text-sm">'
-					+ address +
-					'</div>\
-				</div>\
-			</div>');
+					<div class="row">\
+						<div class="col">\
+							<div class="text text-sm">'
+							+ address +
+							'</div>\
+						</div>\
+					</div>');
 
-			$("#no-plasma-assets").addClass("hidden");
+					$("#no-plasma-assets").addClass("hidden");
 
-			buyHeroes(3);
+					buyHeroes(3);
 
-			ethBalance -= 3;
-			updateBalances();
-		}, 1500);
+					ethBalance -= 3;
+					updateBalances();
+				} else {
+					li.addClass("list-group-item-danger").html('<div class="row">\
+						<div class="col-md-auto">\
+							<div class="text text-muted">'
+								+ moment().format("MM/DD/YYYY HH:mm:SS") + 
+							'</div>\
+						</div>\
+						<div class="col-md-auto">\
+							<div class="text text-right">\
+								Error\
+							</div>\
+						</div>\
+					</div>');
+
+					$("#no-plasma-assets").addClass("hidden");
+				}
+			}
+		);
 	});
 	
 	$('.btn-withdraw').click(onWithdraw);
