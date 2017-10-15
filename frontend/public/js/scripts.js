@@ -52,10 +52,10 @@ $(document).ready(function () {
 			data: methodSignature
 		};
 
-		web3.eth.sendTransaction(
-			post_request,
-			function(err, transactionHash) {
-				if (!err) {
+		//web3.eth.sendTransaction(
+		//	post_request,
+		//	function(err, transactionHash) {
+		//		if (!err) {
 					li.html('<div class="row">\
 						<div class="col-md-auto">\
 							<div class="text text-muted">'
@@ -82,24 +82,24 @@ $(document).ready(function () {
 
 					ethBalance -= 1;
 					updateBalances();
-				} else {
-					li.addClass("list-group-item-danger").html('<div class="row">\
-						<div class="col-md-auto">\
-							<div class="text text-muted">'
-								+ moment().format("MM/DD/YYYY HH:mm:SS") + 
-							'</div>\
-						</div>\
-						<div class="col-md-auto">\
-							<div class="text text-right">\
-								Error\
-							</div>\
-						</div>\
-					</div>');
+				// } else {
+				// 	li.addClass("list-group-item-danger").html('<div class="row">\
+				// 		<div class="col-md-auto">\
+				// 			<div class="text text-muted">'
+				// 				+ moment().format("MM/DD/YYYY HH:mm:SS") + 
+				// 			'</div>\
+				// 		</div>\
+				// 		<div class="col-md-auto">\
+				// 			<div class="text text-right">\
+				// 				Error\
+				// 			</div>\
+				// 		</div>\
+				// 	</div>');
 
-					$("#no-plasma-assets").addClass("hidden");
-				}
-			}
-		);
+				// 	$("#no-plasma-assets").addClass("hidden");
+				// }
+		//	}
+		//);
 	});
 
 	$('#btn-deposit-3').click(function () {
@@ -287,50 +287,62 @@ function onWithdraw(sender) {
 }
 
 function onExchange(sender) {
-	$("#no-plasma-assets-others").addClass("hidden");
+	$("#no-plasma-exchange-pool").addClass("hidden");
 
-	var cardPlasma = $(sender).parents('li');
-	cardPlasma.addClass('disabled');
-	cardPlasma.fadeOut(500, function () {
-		cardPlasma.remove();
+	var cardPlasma = $(sender).parents('.card.hero').parent();
+	cardPlasma.removeClass("col-md-3").addClass("col");
 
-		var collectionPlasma = $("#list-plasma-assets");
+	var collectionPlasmaExchangePool = $("#list-plasma-exchange-pool");
+	collectionPlasmaExchangePool.removeClass('hidden');
+	cardPlasma.appendTo(collectionPlasmaExchangePool);
 
-		if (collectionPlasma.children().length === 0)
-			$("#no-plasma-assets").removeClass("hidden");
-	});
+	var collectionPlasma = $("#list-plasma-assets");
 
-	var collectionPlasmaOthers = $("#list-plasma-assets-others");
-	collectionPlasmaOthers.removeClass("hidden");
+	if (collectionPlasma.children().length === 0)
+		$("#no-plasma-assets").removeClass("hidden");
 
-	var cardPlasmaOthers = $('<li class="list-group-item list-group-item-secondary" style="display: none;">\
-		<div class="row justify-content-md-center">\
-			<div class="col-md-auto">\
-				<div class="text">\
-					<i class="fa fa-spinner fa-spin fa-fw"></i>\
-				</div>\
-			</div>\
-		</div>\
-	</li>');
+	// var cardPlasma = $(sender).parents('li');
+	// cardPlasma.addClass('disabled');
+	// cardPlasma.fadeOut(500, function () {
+	// 	cardPlasma.remove();
 
-	cardPlasmaOthers.appendTo(collectionPlasmaOthers).fadeIn(500);
+	// 	var collectionPlasma = $("#list-plasma-assets");
+
+	// 	if (collectionPlasma.children().length === 0)
+	// 		$("#no-plasma-assets").removeClass("hidden");
+	// });
+
+	// var collectionPlasmaOthers = $("#list-plasma-assets-others");
+	// collectionPlasmaOthers.removeClass("hidden");
+
+	// var cardPlasmaOthers = $('<li class="list-group-item list-group-item-secondary" style="display: none;">\
+	// 	<div class="row justify-content-md-center">\
+	// 		<div class="col-md-auto">\
+	// 			<div class="text">\
+	// 				<i class="fa fa-spinner fa-spin fa-fw"></i>\
+	// 			</div>\
+	// 		</div>\
+	// 	</div>\
+	// </li>');
+
+	// cardPlasmaOthers.appendTo(collectionPlasmaOthers).fadeIn(500);
 	
-	setTimeout(function () {
-		cardPlasmaOthers.html('<div class="row">\
-			<div class="col-md-auto">\
-				<div class="text text-muted">\
-					10/14/2017 17:00:00\
-				</div>\
-			</div>\
-			<div class="col">\
-				<div class="text">\
-					0x0000000000000000000000000000000000000001\
-				</div>\
-			</div>\
-		</div>');
+	// setTimeout(function () {
+	// 	cardPlasmaOthers.html('<div class="row">\
+	// 		<div class="col-md-auto">\
+	// 			<div class="text text-muted">\
+	// 				10/14/2017 17:00:00\
+	// 			</div>\
+	// 		</div>\
+	// 		<div class="col">\
+	// 			<div class="text">\
+	// 				0x0000000000000000000000000000000000000001\
+	// 			</div>\
+	// 		</div>\
+	// 	</div>');
 
-		updateBalances();
-	}, 300);
+	// 	updateBalances();
+	// }, 300);
 }
 
 function getAccountAddress() {
