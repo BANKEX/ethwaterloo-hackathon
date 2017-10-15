@@ -10,7 +10,7 @@ setTimeout(function () {
 }, 500);
 
 var address;
-var ethBalance = 123;
+var ethBalance = 125;
 
 var heroes = [
 	{ title: 'Wonder Woman', desc: '1941', img: 'wonder-woman.jpg' },
@@ -80,7 +80,7 @@ $(document).ready(function () {
 
 					buyHeroes(1);
 
-					ethBalance -= 1;
+					ethBalance -= 10;
 					updateBalances();
 				// } else {
 				// 	li.addClass("list-group-item-danger").html('<div class="row">\
@@ -157,7 +157,7 @@ $(document).ready(function () {
 
 					buyHeroes(3);
 
-					ethBalance -= 3;
+					ethBalance -= 30;
 					updateBalances();
 				} else {
 					li.addClass("list-group-item-danger").html('<div class="row">\
@@ -221,7 +221,7 @@ function buyHeroes(count) {
 }
 
 function updateBalances() {
-	$("#eth-balance").text((ethBalance / 10.0).toFixed(1));
+	$("#eth-balance").text((ethBalance / 100.0).toFixed(2));
 	$("#heroes-count").text(collectedHeroes.length);
 	$("#heroes-total").text(heroes.length);
 
@@ -233,8 +233,8 @@ function updateBalances() {
 function onWithdraw(sender) {
 	$("#no-plasma-assets").addClass("hidden");
 
-	var ul = $("#list-plasma-assets");
-	ul.removeClass("hidden");
+	var collectionPlasma = $("#list-plasma-assets");
+	collectionPlasma.removeClass("hidden");
 
 	var ul = $("#list-eth-transactions");
 
@@ -250,8 +250,17 @@ function onWithdraw(sender) {
 
 	li.appendTo(ul).fadeIn(500);
 
-	var cardPlasma = $(sender).parents('li');
+	var cardPlasma = $(sender).parents('.card.hero').parent();
 	cardPlasma.addClass('disabled');
+
+	cardPlasma.fadeOut(500, function () {
+		cardPlasma.remove();
+
+		var collectionPlasma = $("#list-plasma-assets");
+
+		if (collectionPlasma.children().length === 0)
+			$("#no-plasma-assets").removeClass("hidden");
+	});
 
 	setTimeout(function () {
 		li.html('<div class="row">\
@@ -260,28 +269,19 @@ function onWithdraw(sender) {
 					10/14/2017 17:00:00\
 				</div>\
 			</div>\
+			<div class="col-md-auto">\
+				<div class="text">\
+					0.05&nbsp;<span class="text-muted">ETH</span> <i class="fa fa-arrow-circle-left"></i>\
+				</div>\
+			</div>\
 			<div class="col">\
 				<div class="text">\
 					0x0000000000000000000000000000000000000001\
 				</div>\
 			</div>\
-			<div class="col-md-auto">\
-				<div class="text">\
-					<i class="fa fa-arrow-circle-up"></i> 0.1&nbsp;<span class="text-muted">ETH</span>\
-				</div>\
-			</div>\
 		</div>');
 
-		cardPlasma.fadeOut(500, function () {
-			cardPlasma.remove();
-
-			var collectionPlasma = $("#list-plasma-assets");
-
-			if (collectionPlasma.children().length === 0)
-				$("#no-plasma-assets").removeClass("hidden");
-		});
-
-		ethBalance += 1;
+		ethBalance += 5;
 		updateBalances();
 	}, 1500);
 }
