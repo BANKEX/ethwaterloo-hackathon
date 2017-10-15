@@ -2,16 +2,17 @@ version: '2'
 services:
   frontend:
     image: node
-    links:
-      - mongo
     volumes:
       - ./frontend/:/usr/src/app
     working_dir: /usr/src/app
     command: sh -c 'npm install; npm install -g nodemon node-gyp; nodemon -e js,ejs index.js'
     ports:
       - "3000:3000"
-  mongo:
-    image: mongo
+  backend:
+    image: node
     volumes:
-    - ./.mongo/data:/data/db
-    restart: always
+      - ./backend/:/usr/src/app
+    working_dir: /usr/src/app
+    command: sh -c 'npm install; npm install -g nodemon; nodemon -e js,ejs server.js'
+    ports:
+      - "8000:8000"

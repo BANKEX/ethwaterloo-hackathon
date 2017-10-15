@@ -1,5 +1,4 @@
 var express = require('express');
-var apiV1 = require('./api.v1');
 var ejsLocals = require('ejs-locals');
 var pages = require('./controllers/pages');
 
@@ -10,8 +9,6 @@ app.set('views', './views')
 app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'));
-
-app.use('/api/v1', apiV1);
 
 app.get('/', function (req, res) {
 	res.redirect('/home');
