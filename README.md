@@ -120,7 +120,7 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-#### Blasma Block Header
+#### Plasma Block Header
 
 ```javascript
 var settings = {
@@ -232,7 +232,7 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-#### Withdraw finalization (after security period of 24 hours)
+#### Withdraw finalization (after security period of 24 hours, but implemented with "EVM_INCREASE_TIME")
 
 ```javascript
 var settings = {
