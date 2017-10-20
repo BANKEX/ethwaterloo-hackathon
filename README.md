@@ -1,5 +1,17 @@
 # The Plasma-like Blockchain Exchange Network
 
+# Clarification
+
+UI is a pure demo for demonstration purposes. Backend is functional on a level of server-managed private keys, transaction sending through REST API and not yet implemented challanges for withdraw process.
+
+Proposed challanges:
+1. Proof double spent (start withdraw and than spent on Plasma or vice-versa)
+2. Proof incorrect "new owner" of withdrawn transaction
+
+One proposed improvement for withdraw process (in normal conditions) - used does a special transaction to 0x0 address and withdraws source of this transaction immediately. If block header is already published on main contract - withdraw is instant and one transaction (in terms of gas price). If block is not yet published (hold by operator for some reason) - withdraw can be done as described below with 2 steps.
+
+Proposed block size in Plasma (in terms of transaction number) - maximum block size in Plasma should be limited by reasonable size of the merkle proof for main net - if we put a limit of  ~ 512 + 4 (bit encoding of left/right) + 96 (tx size of this implementation, original transaction should be supplied)  = 612 bytes it gives depth of 512/32 = 16, that is 2^16 = 65536 transactions per block of Plasma, that can be mined every 5 seconds with ~ 3 headers submitted simultaneously to main net's contact. All estimations are back of the envelope, but should good scaling in PoA networks with fast block propagation to have 5 seconds per Plasma block. 
+
 ## What?
 
 The task is to make blockchain transactions as fast as they can be applied virtually to any application.
